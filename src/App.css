@@ -1,0 +1,138 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.App {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.todo-list {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+h3 {
+  margin: 0 0 30px;
+  color: #333;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 200;
+}
+
+.add-box-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.add-box {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  gap: 17px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.is-done {
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+
+button {
+  background-color: #90a9e4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #6a71a9;
+}
+
+.add-btn {
+  padding: 5px 10px;
+}
+
+.delete-btn {
+  background-color: #b85961;
+  margin-left: 10px;
+}
+
+.delete-btn:hover {
+  background-color: #a12123;
+}
+
+.error {
+  width: calc(100% - 70px);
+  padding: 10px;
+  border: 1px solid #b85961;
+  border-radius: 4px;
+  flex-grow: 1;
+}
+
+.error-message {
+  color: #b85961;
+}
+
+.input-task {
+  width: calc(100% - 70px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.filters button {
+  width: 32%;
+}
+
+.active-filter-btn {
+  background-color: #6a71a9;
+}

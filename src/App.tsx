@@ -7,7 +7,7 @@ export type FilterValuesType = "all" | "active" | "completed";
 function App() {
   //---
   let [tasks, setTasks] = useState<TaskType[]>([
-    { id: v1(), taskTitle: "HTML&CSS", isDone: true },
+    { id: v1(), taskTitle: "HTML&CSS", isDone: false },
     { id: v1(), taskTitle: "JS", isDone: true },
     { id: v1(), taskTitle: "React", isDone: false },
   ]);
@@ -52,6 +52,15 @@ function App() {
     setTasks(newTasks);
   };
 
+  //---
+
+  const changeTaskStatus = (taskId: string, isDone: boolean) => {
+    let updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, isDone: isDone } : task
+    );
+    setTasks(updatedTasks);
+  };
+
   return (
     <div className="App">
       <Todolist
@@ -60,6 +69,8 @@ function App() {
         deleteTask={deleteTask}
         changeFilter={changeFilter}
         addTask={addTask}
+        changeTaskStatus={changeTaskStatus}
+        filter={filter}
       />
     </div>
   );
