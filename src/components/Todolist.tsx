@@ -3,23 +3,29 @@ import { FilterValuesType } from "../App";
 import { Button } from "./Button";
 
 type TodolistPropsType = {
+  todolistId: string;
   title: string;
   tasks: TaskType[];
-  deleteTask: (taskId: string) => void;
-  changeFilter: (filter: FilterValuesType) => void;
-  addTask: (title: string) => void;
-  changeTaskStatus: (taskId: string, isDone: boolean) => void;
+  deleteTask: (todolistId: string, taskId: string) => void;
+  changeFilter: (todolistId: string, filter: FilterValuesType) => void;
+  addTask: (todolistId: string, title: string) => void;
+  changeTaskStatus: (
+    todolistId: string,
+    taskId: string,
+    isDone: boolean
+  ) => void;
   filter: FilterValuesType;
 };
 
 export type TaskType = {
   id: string;
-  taskTitle: string;
+  title: string;
   isDone: boolean;
 };
 
 export const Todolist = ({
   title,
+  todolistId,
   tasks,
   deleteTask,
   changeFilter,
@@ -29,7 +35,7 @@ export const Todolist = ({
 }: TodolistPropsType) => {
   //------
   const changeFilterHandler = (filter: FilterValuesType) => {
-    changeFilter(filter);
+    changeFilter(todolistId, filter);
   };
   //------
 
@@ -41,7 +47,7 @@ export const Todolist = ({
 
   const onAddTaskHandler = () => {
     if (newTaskTitle.trim() !== "") {
-      addTask(newTaskTitle);
+      addTask(todolistId, newTaskTitle);
       setNewTaskTitle("");
     } else {
       setError("Title is required");
@@ -93,7 +99,7 @@ export const Todolist = ({
             //-----
 
             const deleteTaskHandler = () => {
-              deleteTask(task.id);
+              deleteTask(todolistId, task.id);
             };
 
             //-----
@@ -102,7 +108,7 @@ export const Todolist = ({
               e: ChangeEvent<HTMLInputElement>
             ) => {
               const newTaskStatus = e.currentTarget.checked;
-              changeTaskStatus(task.id, newTaskStatus);
+              changeTaskStatus(todolistId, task.id, newTaskStatus);
             };
 
             //---
@@ -117,7 +123,7 @@ export const Todolist = ({
                   checked={task.isDone}
                   onChange={onChangeTaskStatusHandler}
                 />
-                <span>{task.taskTitle}</span>
+                <span>{task.title}</span>
                 <Button
                   className="delete-btn"
                   title={"x"}

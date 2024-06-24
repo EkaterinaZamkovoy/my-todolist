@@ -13,6 +13,7 @@ body {
   padding: 30px;
   display: flex;
   justify-content: center;
+  gap: 30px;
 }
 
 .todo-list {
