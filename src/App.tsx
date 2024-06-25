@@ -101,6 +101,11 @@ function App() {
 
         //---
 
+        const deleteTodolist = (todolistId: string) => {
+          const newTodolist = todolists.filter((tl) => tl.id !== todolistId);
+          setTodolists(newTodolist);
+        };
+
         return (
           <Todolist
             todolistId={tl.id}
@@ -112,6 +117,7 @@ function App() {
             addTask={addTask}
             changeTaskStatus={changeTaskStatus}
             filter={tl.filter}
+            deleteTodolist={deleteTodolist}
           />
         );
       })}

@@ -15,6 +15,7 @@ type TodolistPropsType = {
     isDone: boolean
   ) => void;
   filter: FilterValuesType;
+  deleteTodolist: (todolistId: string) => void;
 };
 
 export type TaskType = {
@@ -32,6 +33,7 @@ export const Todolist = ({
   addTask,
   changeTaskStatus,
   filter,
+  deleteTodolist,
 }: TodolistPropsType) => {
   //------
   const changeFilterHandler = (filter: FilterValuesType) => {
@@ -74,9 +76,20 @@ export const Todolist = ({
 
   //---
 
+  const deleteTodolistHandler = () => {
+    deleteTodolist(todolistId);
+  };
+
   return (
     <div className={"todo-list"}>
-      <h3>{title}</h3>
+      <div className="todo-list-title-block">
+        <h3>{title}</h3>
+        <Button
+          title="x"
+          onClick={deleteTodolistHandler}
+          className="delete-todo-list-btn"
+        />
+      </div>
       <div className="add-box-container">
         <div className="add-box">
           <input
