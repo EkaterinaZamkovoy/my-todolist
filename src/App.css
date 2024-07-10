@@ -22,29 +22,41 @@ body {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 300px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
 .todo-list-title-block {
+  width: 80%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: 0 0 30px;
 }
 
 .delete-todo-list-btn {
-  background-color: #9297a4;
-  color: white;
+  background-image: url("../src/assets/icons/Trash.png");
+  width: 50px;
+  height: 50px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 50%;
   padding: 10px 15px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .delete-todo-list-btn:hover {
-  background-color: #5b5e67;
+  background-color: #d2d2d227;
 }
 
-h3 {
+/* h3  */
+.editableSpan {
   color: #333;
   text-align: center;
   font-size: 28px;
@@ -55,20 +67,31 @@ h3 {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  min-width: 300px;
 }
 
 .add-box {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-bottom: 5px;
-  gap: 17px;
+  gap: 15px;
   margin-bottom: 10px;
 }
 
+.tasks {
+  width: 90%;
+  margin-bottom: 50px;
+}
+
 ul {
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.task {
+  font-size: 18px;
 }
 
 .todo-item {
@@ -105,6 +128,7 @@ button {
   border-radius: 4px;
   padding: 5px 10px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
@@ -116,12 +140,8 @@ button:hover {
 }
 
 .delete-btn {
-  background-color: #b85961;
+  background-color: #f9f9f9;
   margin-left: 10px;
-}
-
-.delete-btn:hover {
-  background-color: #a12123;
 }
 
 .error {
@@ -144,9 +164,12 @@ button:hover {
 }
 
 .filters {
+  width: 90%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 30px;
+  position: absolute;
+  bottom: 20px;
 }
 
 .filters button {
@@ -155,4 +178,8 @@ button:hover {
 
 .active-filter-btn {
   background-color: #6a71a9;
+}
+
+.change-title-input {
+  width: 90%;
 }
