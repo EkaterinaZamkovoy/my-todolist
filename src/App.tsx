@@ -3,6 +3,8 @@ import { TaskType, Todolist } from "./components/Todolist";
 import { v1 } from "uuid";
 import "./App.css";
 import { AddItemForm } from "./components/AddItemForm";
+import { Container } from "./components/Container";
+import { MenuBar } from "./components/MenuBar";
 
 export type TodolistType = {
   id: string;
@@ -118,45 +120,52 @@ function App() {
 
   return (
     <div className="App">
-      <AddItemForm addItem={addTodolist} />
-      {todolists.map((tl) => {
-        //---
+      <MenuBar />
+      <Container className="main-add-form-container">
+        <AddItemForm addItem={addTodolist} />
+      </Container>
+      <Container className="main-container">
+        {todolists.map((tl) => {
+          //---
 
-        const allTodolistTasks = tasks[tl.id];
+          const allTodolistTasks = tasks[tl.id];
 
-        let tasksForTodolist = allTodolistTasks;
+          let tasksForTodolist = allTodolistTasks;
 
-        if (tl.filter === "active") {
-          tasksForTodolist = allTodolistTasks.filter((t) => !t.isDone);
-        }
-        if (tl.filter === "completed") {
-          tasksForTodolist = allTodolistTasks.filter((t) => t.isDone);
-        }
+          if (tl.filter === "active") {
+            tasksForTodolist = allTodolistTasks.filter((t) => !t.isDone);
+          }
+          if (tl.filter === "completed") {
+            tasksForTodolist = allTodolistTasks.filter((t) => t.isDone);
+          }
 
-        //---
+          //---
 
-        const deleteTodolist = (todolistId: string) => {
-          const newTodolist = todolists.filter((tl) => tl.id !== todolistId);
-          setTodolists(newTodolist);
-        };
+          const deleteTodolist = (todolistId: string) => {
+            const newTodolist = todolists.filter((tl) => tl.id !== todolistId);
+            setTodolists(newTodolist);
+          };
 
-        return (
-          <Todolist
-            todolistId={tl.id}
-            key={tl.id}
-            title={tl.title}
-            tasks={tasksForTodolist}
-            deleteTask={deleteTask}
-            changeFilter={changeFilter}
-            addTask={addTask}
-            changeTaskStatus={changeTaskStatus}
-            filter={tl.filter}
-            deleteTodolist={deleteTodolist}
-            updateTask={updateTask}
-            updateTodolist={updateTodolist}
-          />
-        );
-      })}
+          return (
+            <Container className="grid-container">
+              <Todolist
+                todolistId={tl.id}
+                key={tl.id}
+                title={tl.title}
+                tasks={tasksForTodolist}
+                deleteTask={deleteTask}
+                changeFilter={changeFilter}
+                addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
+                filter={tl.filter}
+                deleteTodolist={deleteTodolist}
+                updateTask={updateTask}
+                updateTodolist={updateTodolist}
+              />
+            </Container>
+          );
+        })}
+      </Container>
     </div>
   );
 }

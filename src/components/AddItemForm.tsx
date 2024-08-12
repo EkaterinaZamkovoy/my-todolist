@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, KeyboardEvent } from "react";
 import { Button } from "./Button";
+import { Container } from "./Container";
 
 type AddItemFormPropsType = {
   addItem: (title: string) => void;
@@ -41,8 +42,8 @@ export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
   };
 
   return (
-    <div className="add-box-container">
-      <div className="add-box">
+    <Container className="add-box-container">
+      <Container className="add-box">
         <input
           className={error ? "error" : "input-task"}
           type="text"
@@ -51,8 +52,8 @@ export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
           onKeyUp={onKeyUpItemHandler}
         />
         <Button className="add-btn" title={"+"} onClick={addItemHandler} />
-      </div>
+      </Container>
       {error && <div className={"error-message"}>{error}</div>}
-    </div>
+    </Container>
   );
 };
