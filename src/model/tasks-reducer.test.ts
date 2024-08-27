@@ -9,10 +9,10 @@ import {
 } from "./tasks-reducer";
 import { addTodolistAC, deleteTodolistAC } from "./todolists-reducer";
 
-// removeTask
+let startState: TasksStateType;
 
-test("the correct task must be removed from the correct array", () => {
-  const startState: TasksStateType = {
+beforeEach(() => {
+  startState = {
     todolistID1: [
       { id: "1", title: "HTML&CSS", isDone: true },
       { id: "2", title: "JS", isDone: true },
@@ -23,7 +23,11 @@ test("the correct task must be removed from the correct array", () => {
       { id: "2", title: "GraphQL", isDone: false },
     ],
   };
+});
 
+// removeTask
+
+test("the correct task must be removed from the correct array", () => {
   const action = deleteTaskAC("todolistID2", "2");
   const endState = tasksReducer(startState, action);
 
@@ -40,18 +44,6 @@ test("the correct task must be removed from the correct array", () => {
 // addTask
 
 test("adding task to correct array", () => {
-  const startState: TasksStateType = {
-    todolistID1: [
-      { id: "1", title: "HTML&CSS", isDone: true },
-      { id: "2", title: "JS", isDone: true },
-      { id: "3", title: "ReactJS", isDone: false },
-    ],
-    todolistID2: [
-      { id: "1", title: "Rest API", isDone: true },
-      { id: "2", title: "GraphQL", isDone: false },
-    ],
-  };
-
   const action = addTaskAC("todolistID2", "CSS");
   const endState = tasksReducer(startState, action);
 
@@ -65,18 +57,6 @@ test("adding task to correct array", () => {
 //taskStatus
 
 test("the status of a specific task must be changed", () => {
-  const startState: TasksStateType = {
-    todolistID1: [
-      { id: "1", title: "HTML&CSS", isDone: true },
-      { id: "2", title: "JS", isDone: true },
-      { id: "3", title: "ReactJS", isDone: false },
-    ],
-    todolistID2: [
-      { id: "1", title: "Rest API", isDone: true },
-      { id: "2", title: "GraphQL", isDone: false },
-    ],
-  };
-
   const action = changeTaskStatusAC("todolistID1", "1", false);
   const endState = tasksReducer(startState, action);
 
@@ -87,18 +67,6 @@ test("the status of a specific task must be changed", () => {
 //updateTaskTitle
 
 test("the title of a specific task must be changed", () => {
-  const startState: TasksStateType = {
-    todolistID1: [
-      { id: "1", title: "HTML&CSS", isDone: true },
-      { id: "2", title: "JS", isDone: true },
-      { id: "3", title: "ReactJS", isDone: false },
-    ],
-    todolistID2: [
-      { id: "1", title: "Rest API", isDone: true },
-      { id: "2", title: "GraphQL", isDone: false },
-    ],
-  };
-
   const action = updateTaskTitleAC("todolistID1", "1", "Test");
   const endState = tasksReducer(startState, action);
 
@@ -109,20 +77,7 @@ test("the title of a specific task must be changed", () => {
 //delete tasks from remote todolist
 
 test("property with todolistId should be deleted", () => {
-  const startState: TasksStateType = {
-    todolistId1: [
-      { id: "1", title: "CSS", isDone: false },
-      { id: "2", title: "JS", isDone: true },
-      { id: "3", title: "React", isDone: false },
-    ],
-    todolistId2: [
-      { id: "1", title: "bread", isDone: false },
-      { id: "2", title: "milk", isDone: true },
-      { id: "3", title: "tea", isDone: false },
-    ],
-  };
-
-  const action = deleteTodolistAC("todolistId2");
+  const action = deleteTodolistAC("todolistID2");
 
   const endState = tasksReducer(startState, action);
 

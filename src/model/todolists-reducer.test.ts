@@ -8,17 +8,23 @@ import {
   updateTodolistTitleAC,
 } from "./todolists-reducer";
 
-//delete-todolist
+let todolistID1: string;
+let todolistID2: string;
+let startState: TodolistType[];
 
-test("correct todolist should be delete", () => {
-  let todolistID1 = v1();
-  let todolistID2 = v1();
+beforeEach(() => {
+  todolistID1 = v1();
+  todolistID2 = v1();
 
-  const startState: TodolistType[] = [
+  startState = [
     { id: todolistID1, title: "What to learn", filter: "all" },
     { id: todolistID2, title: "What to buy", filter: "all" },
   ];
+});
 
+//delete-todolist
+
+test("correct todolist should be deleted", () => {
   const endState = todolistsReducer(startState, deleteTodolistAC(todolistID1));
 
   expect(endState.length).toBe(1);
@@ -28,14 +34,6 @@ test("correct todolist should be delete", () => {
 //add-todolist
 
 test("correct todolist should be added", () => {
-  let todolistID1 = v1();
-  let todolistID2 = v1();
-
-  const startState: TodolistType[] = [
-    { id: todolistID1, title: "What to learn", filter: "all" },
-    { id: todolistID2, title: "What to buy", filter: "all" },
-  ];
-
   const endState = todolistsReducer(startState, addTodolistAC("New Todolist"));
 
   expect(endState.length).toBe(3);
@@ -45,14 +43,6 @@ test("correct todolist should be added", () => {
 //change-filter
 
 test("correct todolist should be filtered", () => {
-  let todolistID1 = v1();
-  let todolistID2 = v1();
-
-  const startState: TodolistType[] = [
-    { id: todolistID1, title: "What to learn", filter: "all" },
-    { id: todolistID2, title: "What to buy", filter: "all" },
-  ];
-
   const action = {
     type: "CHANGE-TODOLIST-FILTER",
     filter: "completed",
@@ -71,14 +61,6 @@ test("correct todolist should be filtered", () => {
 //change-title
 
 test("correct todolist should be title changed", () => {
-  let todolistID1 = v1();
-  let todolistID2 = v1();
-
-  const startState: TodolistType[] = [
-    { id: todolistID1, title: "What to learn", filter: "all" },
-    { id: todolistID2, title: "What to buy", filter: "all" },
-  ];
-
   const action = {
     type: "UPDATE-TODOLIST-TITLE",
     title: "New Todolist Title",
