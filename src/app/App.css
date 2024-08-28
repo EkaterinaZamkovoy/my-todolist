@@ -82,7 +82,7 @@ body {
 }
 
 .delete-todo-list-btn {
-  background-image: url("../src/assets/icons/Trash.png");
+  background-image: url("../assets/icons/Trash.png");
   width: 50px;
   height: 50px;
   background-position: center center;

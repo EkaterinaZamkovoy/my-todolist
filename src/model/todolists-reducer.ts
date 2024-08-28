@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import { FilterValuesType, TodolistType } from "../App";
+import { FilterValuesType, TodolistType } from "../app/App";
 
 export type DeleteTodolistActionType = {
   type: "DELETE-TODOLIST";
@@ -30,18 +30,12 @@ type ActionsType =
   | ChangeTodolistFilterActionType
   | UpdateTodolistTitleActionType;
 
-let todolistID1 = v1();
-let todolistID2 = v1();
-
-const initialState: TodolistType[] = [
-  { id: todolistID1, title: "What to learn", filter: "all" },
-  { id: todolistID2, title: "What to buy", filter: "all" },
-];
+const initialState: TodolistType[] = [];
 
 export const todolistsReducer = (
   state: TodolistType[] = initialState,
   action: ActionsType
-) => {
+): TodolistType[] => {
   switch (action.type) {
     case "DELETE-TODOLIST": {
       return state.filter((tl) => tl.id !== action.todolistId);
@@ -70,7 +64,7 @@ export const todolistsReducer = (
       return [...state];
     }
     default:
-      throw new Error("I don't understand this type");
+      return state;
   }
 };
 

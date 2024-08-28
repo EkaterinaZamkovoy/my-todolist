@@ -1,24 +1,22 @@
-import React, { useReducer, useState } from "react";
-import { TaskType, Todolist } from "./components/Todolist";
-import { v1 } from "uuid";
 import "./App.css";
-import { AddItemForm } from "./components/AddItemForm";
-import { Container } from "./components/Container";
-import { MenuBar } from "./components/MenuBar";
-import {
-  addTodolistAC,
-  changeTodolistFilterAC,
-  deleteTodolistAC,
-  todolistsReducer,
-  updateTodolistTitleAC,
-} from "./model/todolists-reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { TaskType, Todolist } from "../components/Todolist";
+import { AppRootStateType } from "./store";
 import {
   addTaskAC,
   changeTaskStatusAC,
   deleteTaskAC,
-  tasksReducer,
   updateTaskTitleAC,
-} from "./model/tasks-reducer";
+} from "../model/tasks-reducer";
+import {
+  addTodolistAC,
+  changeTodolistFilterAC,
+  deleteTodolistAC,
+  updateTodolistTitleAC,
+} from "../model/todolists-reducer";
+import { MenuBar } from "../components/MenuBar";
+import { Container } from "../components/Container";
+import { AddItemForm } from "../components/AddItemForm";
 
 export type TodolistType = {
   id: string;
@@ -32,60 +30,44 @@ export type TasksStateType = {
 
 export type FilterValuesType = "all" | "active" | "completed";
 
-function AppWithReducers() {
+function App() {
   //---
 
-  let todolistID1 = v1();
-  let todolistID2 = v1();
+  const todolists = useSelector<AppRootStateType, TodolistType[]>(
+    (state) => state.todolists
+  );
 
-  let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
-    { id: todolistID1, title: "What to learn", filter: "all" },
-    { id: todolistID2, title: "What to buy", filter: "all" },
-  ]);
+  const tasks = useSelector<AppRootStateType, TasksStateType>(
+    (state) => state.tasks
+  );
 
-  let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
-    [todolistID1]: [
-      { id: v1(), title: "HTML&CSS", isDone: true },
-      { id: v1(), title: "JS", isDone: true },
-      { id: v1(), title: "ReactJS", isDone: false },
-    ],
-    [todolistID2]: [
-      { id: v1(), title: "Rest API", isDone: true },
-      { id: v1(), title: "GraphQL", isDone: false },
-    ],
-  });
+  const dispatch = useDispatch();
 
   //---
 
   const deleteTask = (todolistId: string, taskId: string) => {
     const action = deleteTaskAC(todolistId, taskId);
-    dispatchToTasks(action);
+    dispatch(action);
   };
 
   //---
 
   const changeFilter = (todolistId: string, filter: FilterValuesType) => {
     const action = changeTodolistFilterAC(todolistId, filter);
-    dispatchToTodolists(action);
+    dispatch(action);
   };
 
   //---
 
   const addTask = (todolistId: string, title: string) => {
-    const newTask = {
-      id: v1(),
-      title: title,
-      isDone: false,
-    };
-    dispatchToTasks(addTaskAC(todolistId, title));
+    dispatch(addTaskAC(todolistId, title));
   };
 
   //---
 
   const addTodolist = (title: string) => {
     const action = addTodolistAC(title);
-    dispatchToTodolists(action);
-    dispatchToTasks(action);
+    dispatch(action);
   };
 
   //---
@@ -96,29 +78,28 @@ function AppWithReducers() {
     isDone: boolean
   ) => {
     const action = changeTaskStatusAC(todolistId, taskId, isDone);
-    dispatchToTasks(action);
+    dispatch(action);
   };
 
   //---
 
   const updateTask = (todolistId: string, taskId: string, title: string) => {
     const action = updateTaskTitleAC(todolistId, taskId, title);
-    dispatchToTasks(action);
+    dispatch(action);
   };
 
   //---
 
   const updateTodolist = (todolistId: string, title: string) => {
     const action = updateTodolistTitleAC(title, todolistId);
-    dispatchToTodolists(action);
+    dispatch(action);
   };
 
   //---
 
   const deleteTodolist = (todolistId: string) => {
     const action = deleteTodolistAC(todolistId);
-    dispatchToTodolists(action);
-    dispatchToTasks(action);
+    dispatch(action);
   };
 
   return (
@@ -145,7 +126,7 @@ function AppWithReducers() {
           //---
 
           return (
-            <Container className="grid-container">
+            <Container key={tl.id} className="grid-container">
               <Todolist
                 todolistId={tl.id}
                 key={tl.id}
@@ -168,4 +149,4 @@ function AppWithReducers() {
   );
 }
 
-export default AppWithReducers;
+export default App;
