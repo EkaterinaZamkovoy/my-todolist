@@ -3,7 +3,17 @@ import {
   AddTodolistActionType,
   DeleteTodolistActionType,
 } from "./todolists-reducer";
-import { TasksStateType } from "../app/App";
+
+
+export type TasksStateType = {
+  [key: string]: TaskType[];
+};
+
+export type TaskType = {
+  id: string;
+  title: string;
+  isDone: boolean;
+};
 
 type DeleteTaskActionType = {
   type: "DELETE-TASK";
