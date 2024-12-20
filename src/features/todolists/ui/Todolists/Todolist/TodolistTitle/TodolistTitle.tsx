@@ -1,6 +1,6 @@
 import {
   deleteTodolistAC,
-  TodolistType,
+  DomainTodolist,
   updateTodolistTitleAC,
 } from '../../../../model/todolists-reducer';
 
@@ -9,7 +9,7 @@ import { useAppDispatch } from '../../../../../../common/hooks/useAppDispatch';
 import { EditableSpan } from 'common/components';
 
 type TodolistTitleProps = {
-  todolist: TodolistType;
+  todolist: DomainTodolist;
 };
 
 export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
@@ -22,7 +22,7 @@ export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
   };
 
   const updateTodolistHandler = (title: string) => {
-    dispatch(updateTodolistTitleAC(id, title));
+    dispatch(updateTodolistTitleAC({ id, title }));
   };
   return (
     <div className='todo-list-title-block'>

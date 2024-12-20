@@ -1,48 +1,63 @@
 import { ChangeEvent } from 'react';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
-import { TodolistType } from 'features/todolists/model/todolists-reducer';
+
 import {
-  changeTaskStatusAC,
-  deleteTaskAC,
-  TaskType,
-  updateTaskTitleAC,
+  deleteTaskTC,
+  updateTaskTC,
 } from 'features/todolists/model/tasks-reducer';
 import { EditableSpan } from 'common/components/EditableSpan';
 import { Button } from 'common/components';
+import { DomainTodolist } from 'features/todolists/model/todolists-reducer';
+import { DomainTask } from 'features/todolists/api/tasksApi.types';
+import { TaskStatus } from 'common/enums/enums';
 
 type TaskProps = {
-  task: TaskType;
-  todolist: TodolistType;
+  task: DomainTask;
+  todolist: DomainTodolist;
 };
 
 export const Task = ({ task, todolist }: TaskProps) => {
   const dispatch = useAppDispatch();
 
-  const ChangeTaskTitleHandler = (title: string) => {
-    dispatch(updateTaskTitleAC(todolist.id, task.id, title));
-  };
-
   const deleteTaskHandler = () => {
-    dispatch(deleteTaskAC(todolist.id, task.id));
+    dispatch(deleteTaskTC({ taskId: task.id, todolistId: todolist.id }));
   };
 
   const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const newTaskStatus = e.currentTarget.checked;
-    dispatch(changeTaskStatusAC(todolist.id, task.id, newTaskStatus));
+    let status = e.currentTarget.checked
+      ? TaskStatus.Completed
+      : TaskStatus.New;
+    dispatch(
+      updateTaskTC({
+        taskId: task.id,
+        todolistId: todolist.id,
+        domainModel: { status },
+      })
+    );
+  };
+
+  const changeTaskTitleHandler = (title: string) => {
+    dispatch(
+      updateTaskTC({
+        taskId: task.id,
+        todolistId: todolist.id,
+        domainModel: { title },
+      })
+    );
   };
 
   return (
-    <li key={task.id} className={task.isDone ? 'is-done' : 'todo-item'}>
+    <li key={task.id} className={task.status ? 'is-done' : 'todo-item'}>
       <input
         className='checkbox'
         type='checkbox'
-        checked={task.isDone}
+        checked={task.status === TaskStatus.Completed}
         onChange={onChangeTaskStatusHandler}
       />
       <EditableSpan
         className='task'
         value={task.title}
-        onChange={ChangeTaskTitleHandler}
+        onChange={changeTaskTitleHandler}
       />
       <Button
         className={'delete-todo-list-btn delete-btn'}

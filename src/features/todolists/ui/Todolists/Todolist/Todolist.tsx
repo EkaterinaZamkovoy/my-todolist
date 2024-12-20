@@ -1,21 +1,21 @@
-import { TodolistType } from '../../../model/todolists-reducer';
-import { addTaskAC } from '../../../model/tasks-reducer';
+import { addTaskTC } from '../../../model/tasks-reducer';
 import { TodolistTitle } from './TodolistTitle/TodolistTitle';
 
 import { Tasks } from './Tasks/Tasks';
 import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons';
 import { useAppDispatch } from '../../../../../common/hooks/useAppDispatch';
 import { AddItemForm } from 'common/components';
+import { DomainTodolist } from 'features/todolists/model/todolists-reducer';
 
 type TodolistPropsType = {
-  todolist: TodolistType;
+  todolist: DomainTodolist;
 };
 
 export const Todolist = ({ todolist }: TodolistPropsType) => {
   const dispatch = useAppDispatch();
 
   const addTaskCallback = (title: string) => {
-    dispatch(addTaskAC(todolist.id, title));
+    dispatch(addTaskTC({ todolistId: todolist.id, title }));
   };
 
   return (
