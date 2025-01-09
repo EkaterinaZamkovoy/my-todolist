@@ -1,7 +1,7 @@
-import { v1 } from 'uuid';
 import { Todolist } from '../api/todolistsApi.types';
 import { AppDispatch } from 'app/store';
 import { todolistsApi } from '../api/todolistsApi';
+import { setAppStatusAC } from 'app/app-reducer';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -108,22 +108,30 @@ export const updateTodolistTitleAC = (payload: {
 // Thunk
 
 export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
+  // включаем Loading
+  dispatch(setAppStatusAC('loading'));
   // внутри санки можно делать побочные эффекты (запросы на сервер)
   todolistsApi.getTodolists().then(res => {
     const todolists = res.data;
+    // выключаем Loading
+    dispatch(setAppStatusAC('succeeded'));
     // и диспатчить экшены (action) или другие санки (thunk)
     dispatch(setTodolistsAC(todolists));
   });
 };
 
 export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
+  dispatch(setAppStatusAC('loading'));
   todolistsApi.createTodolist(title).then(res => {
+    dispatch(setAppStatusAC('succeeded'));
     dispatch(addTodolistAC(res.data.data.item));
   });
 };
 
 export const removeTodolistTC = (id: string) => (dispatch: AppDispatch) => {
+  dispatch(setAppStatusAC('loading'));
   todolistsApi.removeTodolist(id).then(res => {
+    dispatch(setAppStatusAC('succeeded'));
     dispatch(deleteTodolistAC(id));
   });
 };

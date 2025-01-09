@@ -7,10 +7,12 @@ import {
 import { tasksReducer } from '../features/todolists/model/tasks-reducer';
 import { todolistsReducer } from '../features/todolists/model/todolists-reducer';
 import { thunk, ThunkDispatch } from 'redux-thunk';
+import { appReducer } from './app-reducer';
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
   todolists: todolistsReducer,
+  app: appReducer,
 });
 
 export const store = legacy_createStore(

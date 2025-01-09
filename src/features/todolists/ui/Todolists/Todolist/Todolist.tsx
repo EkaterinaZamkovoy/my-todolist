@@ -1,6 +1,5 @@
 import { addTaskTC } from '../../../model/tasks-reducer';
 import { TodolistTitle } from './TodolistTitle/TodolistTitle';
-
 import { Tasks } from './Tasks/Tasks';
 import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons';
 import { useAppDispatch } from '../../../../../common/hooks/useAppDispatch';

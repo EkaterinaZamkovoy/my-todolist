@@ -3,9 +3,14 @@ import { addTodolistTC } from '../features/todolists/model/todolists-reducer';
 import { Todolists } from '../features/todolists/ui/Todolists/Todolists';
 import { useAppDispatch } from '../common/hooks/useAppDispatch';
 import { AddItemForm } from 'common/components';
+import { LoadingPage } from 'common/components/LoadingPage/LoadingPage';
+import { useAppSelector } from 'common/hooks/useAppSelector';
+import { selectStatus } from './appSelectors';
 
 export const Main = () => {
   const dispatch = useAppDispatch();
+
+  const status = useAppSelector(selectStatus);
 
   const addTodolist = (title: string) => {
     const action = addTodolistTC(title);
@@ -20,6 +25,7 @@ export const Main = () => {
       <Container className='main-container'>
         <Todolists />
       </Container>
+      {status === 'loading' && <LoadingPage />}
     </>
   );
 };

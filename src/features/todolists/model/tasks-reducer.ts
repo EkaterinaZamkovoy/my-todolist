@@ -9,6 +9,7 @@ import {
   UpdateTaskDomainModel,
   UpdateTaskModel,
 } from '../api/tasksApi.types';
+import { setAppStatusAC } from 'app/app-reducer';
 
 export type TasksStateType = {
   [key: string]: DomainTask[];
@@ -129,7 +130,9 @@ export const updateTaskAC = (payload: {
 
 export const fetchTasksTC = (todolistId: string) => {
   return (dispatch: AppDispatch) => {
+    dispatch(setAppStatusAC('loading'));
     tasksApi.getTasks(todolistId).then(res => {
+      dispatch(setAppStatusAC('succeeded'));
       const tasks = res.data.items;
       dispatch(setTasksAC({ todolistId, tasks }));
     });
@@ -145,7 +148,9 @@ export const deleteTaskTC =
 
 export const addTaskTC =
   (arg: { title: string; todolistId: string }) => (dispatch: AppDispatch) => {
+    dispatch(setAppStatusAC('loading'));
     tasksApi.createTask(arg).then(res => {
+      dispatch(setAppStatusAC('succeeded'));
       dispatch(addTaskAC({ task: res.data.data.item }));
     });
   };

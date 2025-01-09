@@ -1,7 +1,9 @@
 import {
   deleteTodolistAC,
   DomainTodolist,
+  removeTodolistTC,
   updateTodolistTitleAC,
+  updateTodolistTitleTC,
 } from '../../../../model/todolists-reducer';
 
 import { Button } from '../../../../../../common/components/Button/Button';
@@ -18,11 +20,11 @@ export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
   const dispatch = useAppDispatch();
 
   const deleteTodolistHandler = () => {
-    dispatch(deleteTodolistAC(id));
+    dispatch(removeTodolistTC(id));
   };
 
   const updateTodolistHandler = (title: string) => {
-    dispatch(updateTodolistTitleAC({ id, title }));
+    dispatch(updateTodolistTitleTC({ id, title }));
   };
   return (
     <div className='todo-list-title-block'>
