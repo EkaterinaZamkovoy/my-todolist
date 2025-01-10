@@ -1,7 +1,8 @@
 import { Todolist } from '../api/todolistsApi.types';
 import { AppDispatch } from 'app/store';
 import { todolistsApi } from '../api/todolistsApi';
-import { setAppStatusAC } from 'app/app-reducer';
+import { setAppErrorAC, setAppStatusAC } from 'app/app-reducer';
+import { ResultCode } from 'common/enums/enums';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -123,8 +124,17 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
 export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatusAC('loading'));
   todolistsApi.createTodolist(title).then(res => {
-    dispatch(setAppStatusAC('succeeded'));
-    dispatch(addTodolistAC(res.data.data.item));
+    if (res.data.resultCode === ResultCode.Success) {
+      dispatch(addTodolistAC(res.data.data.item));
+      dispatch(setAppStatusAC('succeeded'));
+    } else {
+      if (res.data.messages.length) {
+        dispatch(setAppErrorAC(res.data.messages[0]));
+      } else {
+        dispatch(setAppErrorAC('Some error occurred'));
+      }
+      dispatch(setAppStatusAC('failed'));
+    }
   });
 };
 
