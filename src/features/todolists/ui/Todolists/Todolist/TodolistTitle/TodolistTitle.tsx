@@ -1,8 +1,6 @@
 import {
-  deleteTodolistAC,
   DomainTodolist,
   removeTodolistTC,
-  updateTodolistTitleAC,
   updateTodolistTitleTC,
 } from '../../../../model/todolists-reducer';
 
@@ -15,7 +13,7 @@ type TodolistTitleProps = {
 };
 
 export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
-  const { title, id } = todolist;
+  const { title, id, entityStatus } = todolist;
 
   const dispatch = useAppDispatch();
 
@@ -36,6 +34,7 @@ export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
       <Button
         onClick={deleteTodolistHandler}
         className='delete-todo-list-btn'
+        disabled={entityStatus === 'loading'}
       />
     </div>
   );

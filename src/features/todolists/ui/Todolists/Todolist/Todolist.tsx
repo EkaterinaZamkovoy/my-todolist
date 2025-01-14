@@ -20,7 +20,10 @@ export const Todolist = ({ todolist }: TodolistPropsType) => {
   return (
     <div className={'todo-list'}>
       <TodolistTitle todolist={todolist} />
-      <AddItemForm addItem={addTaskCallback} />
+      <AddItemForm
+        addItem={addTaskCallback}
+        disabled={todolist.entityStatus === 'loading'}
+      />
       <Tasks todolist={todolist} />
       <FilterTasksButtons todolist={todolist} />
     </div>

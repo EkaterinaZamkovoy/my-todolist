@@ -11,6 +11,8 @@ import {
 } from '../api/tasksApi.types';
 import { setAppErrorAC, setAppStatusAC } from 'app/app-reducer';
 import { ResultCode } from 'common/enums/enums';
+import { handleServerAppError } from 'common/utils/handleServerAppError';
+import { handleServerNetworkError } from 'common/utils/handleServerNetworkError';
 
 export type TasksStateType = {
   [key: string]: DomainTask[];
@@ -142,27 +144,38 @@ export const fetchTasksTC = (todolistId: string) => {
 
 export const deleteTaskTC =
   (arg: { taskId: string; todolistId: string }) => (dispatch: AppDispatch) => {
-    tasksApi.removeTask(arg).then(() => {
-      dispatch(deleteTaskAC(arg));
-    });
+    dispatch(setAppStatusAC('loading'));
+    tasksApi
+      .removeTask(arg)
+      .then(res => {
+        if (res.data.resultCode === ResultCode.Success) {
+          dispatch(deleteTaskAC(arg));
+          dispatch(setAppStatusAC('succeeded'));
+        } else {
+          handleServerAppError(res.data, dispatch);
+        }
+      })
+      .catch(error => {
+        handleServerNetworkError(error, dispatch);
+      });
   };
 
 export const addTaskTC =
   (arg: { title: string; todolistId: string }) => (dispatch: AppDispatch) => {
     dispatch(setAppStatusAC('loading'));
-    tasksApi.createTask(arg).then(res => {
-      if (res.data.resultCode === ResultCode.Success) {
-        dispatch(addTaskAC({ task: res.data.data.item }));
-        dispatch(setAppStatusAC('succeeded'));
-      } else {
-        if (res.data.messages.length) {
-          dispatch(setAppErrorAC(res.data.messages[0]));
+    tasksApi
+      .createTask(arg)
+      .then(res => {
+        if (res.data.resultCode === ResultCode.Success) {
+          dispatch(addTaskAC({ task: res.data.data.item }));
+          dispatch(setAppStatusAC('succeeded'));
         } else {
-          dispatch(setAppErrorAC('Some error occurred'));
+          handleServerAppError(res.data, dispatch);
         }
-        dispatch(setAppStatusAC('failed'));
-      }
-    });
+      })
+      .catch(error => {
+        handleServerNetworkError(error, dispatch);
+      });
   };
 
 export const updateTaskTC =
@@ -172,6 +185,7 @@ export const updateTaskTC =
     domainModel: UpdateTaskDomainModel;
   }) =>
   (dispatch: AppDispatch, getState: () => AppRootStateType) => {
+    dispatch(setAppStatusAC('loading'));
     const { taskId, todolistId, domainModel } = arg;
 
     const allTasksFromState = getState().tasks;
@@ -189,8 +203,18 @@ export const updateTaskTC =
         ...domainModel,
       };
 
-      tasksApi.updateTask({ taskId, todolistId, model }).then(res => {
-        dispatch(updateTaskAC(arg));
-      });
+      tasksApi
+        .updateTask({ taskId, todolistId, model })
+        .then(res => {
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(updateTaskAC(arg));
+            dispatch(setAppStatusAC('succeeded'));
+          } else {
+            handleServerAppError(res.data, dispatch);
+          }
+        })
+        .catch(error => {
+          handleServerNetworkError(error, dispatch);
+        });
     }
   };

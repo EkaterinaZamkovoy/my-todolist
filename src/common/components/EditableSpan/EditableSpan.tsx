@@ -1,12 +1,18 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from 'react';
 
 type EditableSpan = {
   value: string;
   onChange: (newTitle: string) => void;
   className: string;
+  disabled?: boolean;
 };
 
-export const EditableSpan = ({ value, onChange, className }: EditableSpan) => {
+export const EditableSpan = ({
+  value,
+  onChange,
+  className,
+  disabled,
+}: EditableSpan) => {
   const [editMode, setEditMode] = useState(false);
   const [changeTitle, setChangeTitle] = useState(value);
 
@@ -33,11 +39,12 @@ export const EditableSpan = ({ value, onChange, className }: EditableSpan) => {
     <div>
       {editMode ? (
         <input
-          className={"input-task change-title-input"}
+          className={'input-task change-title-input'}
           value={changeTitle}
           autoFocus
           onBlur={deActivatedEditModeHandler}
           onChange={onChangeTitleHandler}
+          disabled={disabled}
         />
       ) : (
         <span className={className} onDoubleClick={activatedEditModeHandler}>

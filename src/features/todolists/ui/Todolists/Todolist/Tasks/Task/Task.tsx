@@ -14,9 +14,10 @@ import { TaskStatus } from 'common/enums/enums';
 type TaskProps = {
   task: DomainTask;
   todolist: DomainTodolist;
+  disabled?: boolean;
 };
 
-export const Task = ({ task, todolist }: TaskProps) => {
+export const Task = ({ task, todolist, disabled }: TaskProps) => {
   const dispatch = useAppDispatch();
 
   const deleteTaskHandler = () => {
@@ -53,15 +54,18 @@ export const Task = ({ task, todolist }: TaskProps) => {
         type='checkbox'
         checked={task.status === TaskStatus.Completed}
         onChange={onChangeTaskStatusHandler}
+        disabled={disabled}
       />
       <EditableSpan
         className='task'
         value={task.title}
         onChange={changeTaskTitleHandler}
+        disabled={disabled}
       />
       <Button
         className={'delete-todo-list-btn delete-btn'}
         onClick={deleteTaskHandler}
+        disabled={disabled}
       />
     </li>
   );

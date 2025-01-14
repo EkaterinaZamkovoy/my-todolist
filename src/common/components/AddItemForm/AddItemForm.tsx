@@ -1,16 +1,16 @@
-import { ChangeEvent, useState, KeyboardEvent } from "react";
-import { Container } from "../Container/Container";
-import { Button } from "../Button/Button";
-
+import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { Container } from '../Container/Container';
+import { Button } from '../Button/Button';
 
 type AddItemFormPropsType = {
   addItem: (title: string) => void;
+  disabled?: boolean;
 };
 
-export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
+export const AddItemForm = ({ addItem, disabled }: AddItemFormPropsType) => {
   //------
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
 
   //---
 
@@ -19,11 +19,11 @@ export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
   //---
 
   const addItemHandler = () => {
-    if (title.trim() !== "") {
+    if (title.trim() !== '') {
       addItem(title.trim());
-      setTitle("");
+      setTitle('');
     } else {
-      setError("Title is required");
+      setError('Title is required');
     }
   };
 
@@ -37,24 +37,30 @@ export const AddItemForm = ({ addItem }: AddItemFormPropsType) => {
 
   const onKeyUpItemHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     setError(null);
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       addItemHandler();
     }
   };
 
   return (
-    <Container className="add-box-container">
-      <Container className="add-box">
+    <Container className='add-box-container'>
+      <Container className='add-box'>
         <input
-          className={error ? "error" : "input-task"}
-          type="text"
+          className={error ? 'error' : 'input-task'}
+          type='text'
           value={title}
           onChange={onChangeItemHandler}
           onKeyUp={onKeyUpItemHandler}
+          disabled={disabled}
         />
-        <Button className="add-btn" title={"+"} onClick={addItemHandler} />
+        <Button
+          className='add-btn'
+          title={'+'}
+          onClick={addItemHandler}
+          disabled={disabled}
+        />
       </Container>
-      {error && <div className={"error-message"}>{error}</div>}
+      {error && <div className={'error-message'}>{error}</div>}
     </Container>
   );
 };
