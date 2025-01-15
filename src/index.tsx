@@ -4,17 +4,17 @@ import './app/App.css';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './app/App';
+import { BrowserRouter } from 'react-router';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <Provider store={store}>
       <App />
-      {/* <AppHttpRequests /> */}
     </Provider>
-  </React.StrictMode>
+  </BrowserRouter>
 );
 
 (window as any).store = store;
