@@ -366,9 +366,15 @@ button:hover {
   }
 }
 
-.form-group {
+form {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.errorMessage {
+  color: #f44336;
+  font-size: 14px;
 }
 
 /* Page404 */
