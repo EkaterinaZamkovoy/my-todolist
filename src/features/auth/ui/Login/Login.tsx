@@ -1,5 +1,12 @@
 import { Button, Container } from 'common/components';
+import { useAppDispatch } from 'common/hooks/useAppDispatch';
+import { useAppSelector } from 'common/hooks/useAppSelector';
+import { Path } from 'common/routing/Routing';
+import { loginTC } from 'features/auth/model/auth-reducer';
+import { selectIsLoggedIn } from 'features/auth/model/authSelectors';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 type Inputs = {
   email: string;
@@ -17,15 +24,34 @@ export const Login = () => {
     defaultValues: { email: '', password: '', rememberMe: false },
   });
 
+  const dispatch = useAppDispatch();
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
   const onSubmit: SubmitHandler<Inputs> = data => {
-    console.log(data);
+    dispatch(loginTC(data));
     reset();
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(Path.Main);
+    }
+  }, [isLoggedIn]);
 
   return (
     <Container className='container-login'>
       <Container className='container-login-wrapper'>
         <h2>Войти</h2>
+        <p>or use common test account credentials:</p>
+        <p>
+          <b>Email:</b> free@samuraijs.com
+        </p>
+        <p>
+          <b>Password:</b> free
+        </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
           autoComplete='off'
