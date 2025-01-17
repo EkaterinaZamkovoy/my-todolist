@@ -1,4 +1,3 @@
-import App from "app/App";
 import { Main } from "app/Main";
 import { Page404 } from "common/components";
 import { Login } from "features/auth/ui/Login/Login";

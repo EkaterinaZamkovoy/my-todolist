@@ -83,10 +83,17 @@ export const Login = () => {
               placeholder='Введите пароль'
               autoComplete='off'
               {...register('password', {
-                required: true,
+                required: 'Password is required',
+                pattern: {
+                  value: /^.{3,}$/,
+                  message: 'Password must be at least 3 characters long',
+                },
               })}
             />
           </div>
+          {errors.password && (
+            <span className='errorMessage'>{errors.password.message}</span>
+          )}
           <div className='form-group'>
             <label htmlFor='username'>Запомнить</label>
             <input

@@ -139,13 +139,18 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
   // включаем Loading
   dispatch(setAppStatusAC('loading'));
   // внутри санки можно делать побочные эффекты (запросы на сервер)
-  todolistsApi.getTodolists().then(res => {
-    const todolists = res.data;
-    // выключаем Loading
-    dispatch(setAppStatusAC('succeeded'));
-    // и диспатчить экшены (action) или другие санки (thunk)
-    dispatch(setTodolistsAC(todolists));
-  });
+  todolistsApi
+    .getTodolists()
+    .then(res => {
+      const todolists = res.data;
+      // выключаем Loading
+      dispatch(setAppStatusAC('succeeded'));
+      // и диспатчить экшены (action) или другие санки (thunk)
+      dispatch(setTodolistsAC(todolists));
+    })
+    .catch(error => {
+      handleServerNetworkError(error, dispatch);
+    });
 };
 
 export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {

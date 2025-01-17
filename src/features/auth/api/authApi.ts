@@ -9,4 +9,12 @@ export const authApi = {
       payload
     );
   },
+  logout() {
+    return instance.delete<BaseResponse>('auth/login');
+  },
+  me() {
+    return instance.get<
+      BaseResponse<{ id: number; email: string; login: string }>
+    >('auth/me');
+  },
 };
