@@ -2,7 +2,7 @@ import {
   DomainTodolist,
   removeTodolistTC,
   updateTodolistTitleTC,
-} from '../../../../model/todolists-reducer';
+} from '../../../../model/todolistSlice';
 
 import { Button } from '../../../../../../common/components/Button/Button';
 import { useAppDispatch } from '../../../../../../common/hooks/useAppDispatch';

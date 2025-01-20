@@ -1,12 +1,12 @@
 import { v1 } from 'uuid';
 import {
-  addTodolistAC,
-  changeTodolistFilterAC,
-  deleteTodolistAC,
+  addTodolist,
+  changeTodolistFilter,
+  deleteTodolist,
   DomainTodolist,
   todolistsReducer,
-  updateTodolistTitleAC,
-} from '../todolists-reducer';
+  updateTodolistTitle,
+} from '../todolistSlice';
 import { Todolist } from 'features/todolists/api/todolistsApi.types';
 
 let todolistID1: string;
@@ -24,6 +24,7 @@ beforeEach(() => {
       filter: 'all',
       addedDate: '',
       order: 0,
+      entityStatus: 'idle',
     },
     {
       id: todolistID2,
@@ -31,6 +32,7 @@ beforeEach(() => {
       filter: 'all',
       addedDate: '',
       order: 0,
+      entityStatus: 'idle',
     },
   ];
 });
@@ -38,7 +40,7 @@ beforeEach(() => {
 //delete-todolist
 
 test('correct todolist should be deleted', () => {
-  const endState = todolistsReducer(startState, deleteTodolistAC(todolistID1));
+  const endState = todolistsReducer(startState, deleteTodolist({id: todolistID1}));
 
   expect(endState.length).toBe(1);
   expect(endState[0].id).toBe(todolistID2);
@@ -54,7 +56,7 @@ test('correct todolist should be added', () => {
     order: 0,
   };
 
-  const endState = todolistsReducer(startState, addTodolistAC(todolist));
+  const endState = todolistsReducer(startState, addTodolist({todolist}));
 
   expect(endState.length).toBe(3);
   expect(endState[0].title).toBe(todolist.title);
@@ -72,7 +74,7 @@ test('correct todolist should be filtered', () => {
 
   const endState = todolistsReducer(
     startState,
-    changeTodolistFilterAC({ todolistId: todolistID2, filter: 'completed' })
+    changeTodolistFilter({ todolistId: todolistID2, filter: 'completed' })
   );
 
   expect(endState[0].filter).toBe('all');
@@ -90,7 +92,7 @@ test('correct todolist should be title changed', () => {
 
   const endState = todolistsReducer(
     startState,
-    updateTodolistTitleAC({ id: todolistID2, title: 'New Todolist' })
+    updateTodolistTitle({ id: todolistID2, title: 'New Todolist' })
   );
 
   expect(endState[0].title).toBe('What to learn');

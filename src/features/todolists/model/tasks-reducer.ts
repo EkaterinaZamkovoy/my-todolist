@@ -1,7 +1,4 @@
-import {
-  AddTodolistActionType,
-  DeleteTodolistActionType,
-} from './todolists-reducer';
+import {} from './todolistSlice';
 import { AppDispatch, AppRootStateType } from 'app/store';
 import { tasksApi } from '../api/tasksApi';
 import {
@@ -9,7 +6,7 @@ import {
   UpdateTaskDomainModel,
   UpdateTaskModel,
 } from '../api/tasksApi.types';
-import { setAppErrorAC, setAppStatusAC } from 'app/app-reducer';
+import { setAppStatus } from 'app/appSlice';
 import { ResultCode } from 'common/enums/enums';
 import { handleServerAppError } from 'common/utils/handleServerAppError';
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError';
@@ -28,13 +25,7 @@ export type UpdateTaskActionType = ReturnType<typeof updateTaskAC>;
 
 export type SetTasksActionCreator = ReturnType<typeof setTasksAC>;
 
-type ActionsType =
-  | DeleteTaskActionType
-  | AddTaskActionType
-  | UpdateTaskActionType
-  | AddTodolistActionType
-  | DeleteTodolistActionType
-  | SetTasksActionCreator;
+type ActionsType = any;
 
 const initialState: TasksStateType = {};
 
@@ -133,9 +124,9 @@ export const updateTaskAC = (payload: {
 
 export const fetchTasksTC = (todolistId: string) => {
   return (dispatch: AppDispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatus({ status: 'loading' }));
     tasksApi.getTasks(todolistId).then(res => {
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatus({ status: 'succeeded' }));
       const tasks = res.data.items;
       dispatch(setTasksAC({ todolistId, tasks }));
     });
@@ -144,13 +135,13 @@ export const fetchTasksTC = (todolistId: string) => {
 
 export const deleteTaskTC =
   (arg: { taskId: string; todolistId: string }) => (dispatch: AppDispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatus({ status: 'loading' }));
     tasksApi
       .removeTask(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {
           dispatch(deleteTaskAC(arg));
-          dispatch(setAppStatusAC('succeeded'));
+          dispatch(setAppStatus({ status: 'succeeded' }));
         } else {
           handleServerAppError(res.data, dispatch);
         }
@@ -162,13 +153,13 @@ export const deleteTaskTC =
 
 export const addTaskTC =
   (arg: { title: string; todolistId: string }) => (dispatch: AppDispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatus({ status: 'loading' }));
     tasksApi
       .createTask(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {
           dispatch(addTaskAC({ task: res.data.data.item }));
-          dispatch(setAppStatusAC('succeeded'));
+          dispatch(setAppStatus({ status: 'succeeded' }));
         } else {
           handleServerAppError(res.data, dispatch);
         }
@@ -185,7 +176,7 @@ export const updateTaskTC =
     domainModel: UpdateTaskDomainModel;
   }) =>
   (dispatch: AppDispatch, getState: () => AppRootStateType) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatus({ status: 'loading' }));
     const { taskId, todolistId, domainModel } = arg;
 
     const allTasksFromState = getState().tasks;
@@ -208,7 +199,7 @@ export const updateTaskTC =
         .then(res => {
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(updateTaskAC(arg));
-            dispatch(setAppStatusAC('succeeded'));
+            dispatch(setAppStatus({ status: 'succeeded' }));
           } else {
             handleServerAppError(res.data, dispatch);
           }

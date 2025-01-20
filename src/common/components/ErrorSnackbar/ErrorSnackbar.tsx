@@ -1,4 +1,4 @@
-import { setAppErrorAC } from 'app/app-reducer';
+import { setAppError } from 'app/appSlice';
 import { selectError } from 'app/appSelectors';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import { useAppSelector } from 'common/hooks/useAppSelector';
@@ -23,7 +23,7 @@ export const ErrorSnackbar = ({
     if (!error) return;
 
     const timer = setTimeout(() => {
-      dispatch(setAppErrorAC(null));
+      dispatch(setAppError({ error: null }));
     }, duration);
 
     return () => clearTimeout(timer);
@@ -32,7 +32,7 @@ export const ErrorSnackbar = ({
   if (!error) return null;
 
   const handleClose = () => {
-    dispatch(setAppErrorAC(null));
+    dispatch(setAppError({ error: null }));
   };
 
   return (

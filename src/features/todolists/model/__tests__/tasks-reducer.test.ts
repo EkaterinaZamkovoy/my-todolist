@@ -6,7 +6,7 @@ import {
   TasksStateType,
   updateTaskAC,
 } from '../tasks-reducer';
-import { deleteTodolistAC } from '../todolists-reducer';
+import { deleteTodolist } from '../todolistSlice';
 
 let startState: TasksStateType;
 
@@ -149,7 +149,6 @@ test('status of specified task should be changed', () => {
   expect(endState['todolistId1'][1].status).toBe(TaskStatus.Completed);
 });
 
-
 //updateTaskTitle
 
 test('title of specified task should be changed', () => {
@@ -168,7 +167,7 @@ test('title of specified task should be changed', () => {
 //delete tasks from remote todolist
 
 test('property with todolistId should be deleted', () => {
-  const action = deleteTodolistAC('todolistID2');
+  const action = deleteTodolist({id: 'todolistID2'});
 
   const endState = tasksReducer(startState, action);
 

@@ -2,7 +2,7 @@ import { Button, Container } from 'common/components';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import { useAppSelector } from 'common/hooks/useAppSelector';
 import { Path } from 'common/routing/Routing';
-import { loginTC } from 'features/auth/model/auth-reducer';
+import { loginTC } from 'features/auth/model/authSlice';
 import { selectIsLoggedIn } from 'features/auth/model/authSelectors';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

@@ -6,7 +6,7 @@ import { selectTodolist } from '../../model/todolistsSelectors';
 import { useEffect } from 'react';
 import { todolistsApi } from 'features/todolists/api/todolistsApi';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
-import { fetchTodolistsTC } from 'features/todolists/model/todolists-reducer';
+import { fetchTodolistsTC } from 'features/todolists/model/todolistSlice';
 
 export const Todolists = () => {
   // Получение данных из состояния

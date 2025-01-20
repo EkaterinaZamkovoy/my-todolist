@@ -1,8 +1,8 @@
 import {
-  changeTodolistFilterAC,
+  changeTodolistFilter,
   DomainTodolist,
   FilterValuesType,
-} from '../../../../model/todolists-reducer';
+} from '../../../../model/todolistSlice';
 import { Button } from '../../../../../../common/components/Button/Button';
 import { useAppDispatch } from '../../../../../../common/hooks/useAppDispatch';
 
@@ -15,7 +15,7 @@ export const FilterTasksButtons = ({ todolist }: FilterTasksButtonsProps) => {
   const dispatch = useAppDispatch();
   //------
   const changeFilterHandler = (filter: FilterValuesType) => {
-    dispatch(changeTodolistFilterAC({ todolistId: id, filter }));
+    dispatch(changeTodolistFilter({ todolistId: id, filter }));
   };
   return (
     <div className='filters'>

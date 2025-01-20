@@ -1,5 +1,5 @@
 import { Container } from '../common/components/Container/Container';
-import { addTodolistTC } from '../features/todolists/model/todolists-reducer';
+import { addTodolistTC } from '../features/todolists/model/todolistSlice';
 import { Todolists } from '../features/todolists/ui/Todolists/Todolists';
 import { useAppDispatch } from '../common/hooks/useAppDispatch';
 import { AddItemForm } from 'common/components';

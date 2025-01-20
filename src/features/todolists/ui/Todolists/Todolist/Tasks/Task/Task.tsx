@@ -7,7 +7,7 @@ import {
 } from 'features/todolists/model/tasks-reducer';
 import { EditableSpan } from 'common/components/EditableSpan';
 import { Button } from 'common/components';
-import { DomainTodolist } from 'features/todolists/model/todolists-reducer';
+import { DomainTodolist } from 'features/todolists/model/todolistSlice';
 import { DomainTask } from 'features/todolists/api/tasksApi.types';
 import { TaskStatus } from 'common/enums/enums';
 

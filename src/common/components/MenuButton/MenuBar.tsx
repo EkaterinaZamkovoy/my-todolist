@@ -3,7 +3,7 @@ import { Button } from '../Button/Button';
 import { Container } from '../Container/Container';
 import { selectIsLoggedIn } from 'features/auth/model/authSelectors';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
-import { logoutTC } from 'features/auth/model/auth-reducer';
+import { logoutTC } from 'features/auth/model/authSlice';
 
 export const MenuBar = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);

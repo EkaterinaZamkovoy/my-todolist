@@ -4,7 +4,7 @@ import { Tasks } from './Tasks/Tasks';
 import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons';
 import { useAppDispatch } from '../../../../../common/hooks/useAppDispatch';
 import { AddItemForm } from 'common/components';
-import { DomainTodolist } from 'features/todolists/model/todolists-reducer';
+import { DomainTodolist } from 'features/todolists/model/todolistSlice';
 
 type TodolistPropsType = {
   todolist: DomainTodolist;
