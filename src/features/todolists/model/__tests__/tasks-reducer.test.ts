@@ -1,11 +1,11 @@
 import { TaskPriority, TaskStatus } from 'common/enums/enums';
 import {
-  addTaskAC,
-  deleteTaskAC,
+  addTask,
+  deleteTask,
   tasksReducer,
   TasksStateType,
-  updateTaskAC,
-} from '../tasks-reducer';
+  updateTask,
+} from '../tasksSlice';
 import { deleteTodolist } from '../todolistSlice';
 
 let startState: TasksStateType;
@@ -96,7 +96,7 @@ beforeEach(() => {
 test('correct task should be deleted from correct array', () => {
   const endState = tasksReducer(
     startState,
-    deleteTaskAC({
+    deleteTask({
       taskId: '2',
       todolistId: 'todolistId2',
     })
@@ -110,7 +110,7 @@ test('correct task should be deleted from correct array', () => {
 // addTask
 
 test('correct task should be added to correct array', () => {
-  const action = addTaskAC({
+  const action = addTask({
     task: {
       todoListId: 'todolistId2',
       title: 'juce',
@@ -137,7 +137,7 @@ test('correct task should be added to correct array', () => {
 //taskStatus
 
 test('status of specified task should be changed', () => {
-  const action = updateTaskAC({
+  const action = updateTask({
     todolistId: 'todolistId2',
     taskId: '2',
     domainModel: { status: TaskStatus.New },
@@ -152,7 +152,7 @@ test('status of specified task should be changed', () => {
 //updateTaskTitle
 
 test('title of specified task should be changed', () => {
-  const action = updateTaskAC({
+  const action = updateTask({
     todolistId: 'todolistId2',
     taskId: '2',
     domainModel: { title: 'coffee' },
@@ -167,7 +167,7 @@ test('title of specified task should be changed', () => {
 //delete tasks from remote todolist
 
 test('property with todolistId should be deleted', () => {
-  const action = deleteTodolist({id: 'todolistID2'});
+  const action = deleteTodolist({ id: 'todolistID2' });
 
   const endState = tasksReducer(startState, action);
 

@@ -1,5 +1,5 @@
 import { Todolist } from 'features/todolists/api/todolistsApi.types';
-import { tasksReducer, TasksStateType } from '../tasks-reducer';
+import { tasksReducer, TasksStateType } from '../tasksSlice';
 import {
   addTodolist,
   DomainTodolist,

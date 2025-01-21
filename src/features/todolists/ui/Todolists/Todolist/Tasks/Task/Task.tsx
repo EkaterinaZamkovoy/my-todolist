@@ -4,7 +4,7 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import {
   deleteTaskTC,
   updateTaskTC,
-} from 'features/todolists/model/tasks-reducer';
+} from 'features/todolists/model/tasksSlice';
 import { EditableSpan } from 'common/components/EditableSpan';
 import { Button } from 'common/components';
 import { DomainTodolist } from 'features/todolists/model/todolistSlice';

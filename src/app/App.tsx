@@ -4,9 +4,8 @@ import './App.css';
 import { Routing } from 'common/routing';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import { useEffect } from 'react';
-import { initializeAppTC } from 'features/auth/model/authSlice';
+import { initializeAppTC, selectIsInitialized } from 'features/auth/model/authSlice';
 import { useAppSelector } from 'common/hooks/useAppSelector';
-import { selectIsInitialized } from 'features/auth/model/authSelectors';
 import { LoadingPage } from 'common/components/LoadingPage/LoadingPage';
 
 function App() {

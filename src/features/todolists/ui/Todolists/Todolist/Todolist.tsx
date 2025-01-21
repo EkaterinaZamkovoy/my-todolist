@@ -1,4 +1,4 @@
-import { addTaskTC } from '../../../model/tasks-reducer';
+import { addTaskTC } from '../../../model/tasksSlice';
 import { TodolistTitle } from './TodolistTitle/TodolistTitle';
 import { Tasks } from './Tasks/Tasks';
 import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons';

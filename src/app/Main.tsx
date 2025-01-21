@@ -9,7 +9,7 @@ import { selectStatus } from './appSelectors';
 import { useEffect } from 'react';
 import { Path } from 'common/routing/Routing';
 import { useNavigate } from 'react-router';
-import { selectIsLoggedIn } from 'features/auth/model/authSelectors';
+import { selectIsLoggedIn } from 'features/auth/model/authSlice';
 
 export const Main = () => {
   const dispatch = useAppDispatch();

@@ -1,16 +1,15 @@
 import { Container } from '../../../../common/components/Container/Container';
 import { Todolist } from './Todolist/Todolist';
 import { useAppSelector } from '../../../../common/hooks/useAppSelector';
-import { AppRootStateType } from '../../../../app/store';
-import { selectTodolist } from '../../model/todolistsSelectors';
 import { useEffect } from 'react';
-import { todolistsApi } from 'features/todolists/api/todolistsApi';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
-import { fetchTodolistsTC } from 'features/todolists/model/todolistSlice';
+import { DomainTodolist, fetchTodolistsTC, selectTodolists } from 'features/todolists/model/todolistSlice';
+import { TasksStateType } from 'features/todolists/model/tasksSlice';
+import { RequestStatus } from 'app/appSlice';
 
 export const Todolists = () => {
   // Получение данных из состояния
-  const todolists = useAppSelector(selectTodolist);
+  const todolists = useAppSelector(selectTodolists);
 
   const dispatch = useAppDispatch();
 
@@ -30,3 +29,5 @@ export const Todolists = () => {
     </>
   );
 };
+
+

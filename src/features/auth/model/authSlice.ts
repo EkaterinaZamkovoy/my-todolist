@@ -30,6 +30,10 @@ export const authSlice = createSlice({
       }
     ),
   }),
+  selectors: {
+    selectIsLoggedIn: state => state.isLoggedIn,
+    selectIsInitialized: state => state.isInitialized,
+  },
 });
 
 // thunks
@@ -93,3 +97,4 @@ export const initializeAppTC = () => (dispatch: AppDispatch) => {
 export const { setIsLoggedIn, setIsInitialized } = authSlice.actions;
 // Создаем reducer при помощи slice
 export const authReducer = authSlice.reducer;
+export const { selectIsInitialized, selectIsLoggedIn } = authSlice.selectors;

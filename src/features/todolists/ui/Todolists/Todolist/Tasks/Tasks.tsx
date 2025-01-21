@@ -1,9 +1,8 @@
 import { Task } from './Task/Task';
 import { useAppSelector } from '../../../../../../common/hooks/useAppSelector';
-import { selectTasks } from '../../../../model/tasksSelectors';
 import { DomainTodolist } from 'features/todolists/model/todolistSlice';
 import { useEffect } from 'react';
-import { fetchTasksTC } from 'features/todolists/model/tasks-reducer';
+import { fetchTasksTC, selectTasks } from 'features/todolists/model/tasksSlice';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import { TaskStatus } from 'common/enums/enums';
 

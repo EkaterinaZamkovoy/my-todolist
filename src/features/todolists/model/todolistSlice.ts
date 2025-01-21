@@ -69,6 +69,9 @@ export const todolistSlice = createSlice({
       return [];
     }),
   }),
+  selectors: {
+    selectTodolists: state => state,
+  },
 });
 
 // Thunk
@@ -157,3 +160,4 @@ export const {
 } = todolistSlice.actions;
 
 export const todolistsReducer = todolistSlice.reducer;
+export const { selectTodolists } = todolistSlice.selectors;
