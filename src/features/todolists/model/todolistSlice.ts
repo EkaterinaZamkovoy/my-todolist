@@ -1,6 +1,6 @@
 import { Todolist } from '../api/todolistsApi.types';
 import { AppDispatch } from 'app/store';
-import { todolistsApi } from '../api/todolistsApi';
+import { _todolistsApi, todolistsApi } from '../api/_todolistsApi';
 import { RequestStatus, setAppError, setAppStatus } from 'app/appSlice';
 import { ResultCode } from 'common/enums/enums';
 import { handleServerAppError } from 'common/utils/handleServerAppError';
@@ -80,7 +80,7 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
   // включаем Loading
   dispatch(setAppStatus({ status: 'loading' }));
   // внутри санки можно делать побочные эффекты (запросы на сервер)
-  todolistsApi
+  _todolistsApi
     .getTodolists()
     .then(res => {
       // выключаем Loading
@@ -95,7 +95,7 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
 
 export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }));
-  todolistsApi
+  _todolistsApi
     .createTodolist(title)
     .then(res => {
       console.log('Response:', res);
@@ -115,7 +115,7 @@ export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
 export const removeTodolistTC = (id: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }));
   dispatch(changeTodolistEntityStatus({ id, entityStatus: 'loading' }));
-  todolistsApi
+  _todolistsApi
     .removeTodolist(id)
     .then(res => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -134,7 +134,7 @@ export const removeTodolistTC = (id: string) => (dispatch: AppDispatch) => {
 export const updateTodolistTitleTC =
   (arg: { id: string; title: string }) => (dispatch: AppDispatch) => {
     dispatch(setAppStatus({ status: 'loading' }));
-    todolistsApi
+    _todolistsApi
       .updateTodolist(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {

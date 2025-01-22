@@ -9,6 +9,8 @@ import {
 import { appReducer, appSlice } from './appSlice';
 import { authReducer, authSlice } from 'features/auth/model/authSlice';
 import { configureStore } from '@reduxjs/toolkit';
+import { todolistsApi } from 'features/todolists/api/_todolistsApi';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
@@ -16,8 +18,14 @@ export const store = configureStore({
     [todolistSlice.name]: todolistsReducer,
     [appSlice.name]: appReducer,
     [authSlice.name]: authReducer,
+    [todolistsApi.reducerPath]: todolistsApi.reducer,
   },
+
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(todolistsApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type AppRootStateType = ReturnType<typeof store.getState>;
 
