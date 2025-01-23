@@ -1,6 +1,6 @@
 import { Todolist } from '../api/todolistsApi.types';
 import { AppDispatch } from 'app/store';
-import { _todolistsApi, todolistsApi } from '../api/_todolistsApi';
+import { _todolistsApi, todolistsApi } from '../api/todolistsApi';
 import { RequestStatus, setAppError, setAppStatus } from 'app/appSlice';
 import { ResultCode } from 'common/enums/enums';
 import { handleServerAppError } from 'common/utils/handleServerAppError';

@@ -8,8 +8,18 @@ import {
 import { EditableSpan } from 'common/components/EditableSpan';
 import { Button } from 'common/components';
 import { DomainTodolist } from 'features/todolists/model/todolistSlice';
-import { DomainTask } from 'features/todolists/api/tasksApi.types';
+import {
+  DomainTask,
+  UpdateTaskDomainModel,
+  UpdateTaskModel,
+} from 'features/todolists/api/tasksApi.types';
 import { TaskStatus } from 'common/enums/enums';
+import {
+  useAddTaskMutation,
+  useRemoveTaskMutation,
+  useUpdateTaskMutation,
+} from 'features/todolists/api/tasksApi';
+import { createTaskModel } from 'features/todolists/lib/utils/createTaskModel';
 
 type TaskProps = {
   task: DomainTask;
@@ -18,33 +28,36 @@ type TaskProps = {
 };
 
 export const Task = ({ task, todolist, disabled }: TaskProps) => {
+  const [removeTask] = useRemoveTaskMutation();
+
+  const [updateTask] = useUpdateTaskMutation();
+
   const dispatch = useAppDispatch();
 
   const deleteTaskHandler = () => {
-    dispatch(deleteTaskTC({ taskId: task.id, todolistId: todolist.id }));
+    removeTask({ taskId: task.id, todolistId: todolist.id });
   };
 
   const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let status = e.currentTarget.checked
       ? TaskStatus.Completed
       : TaskStatus.New;
-    dispatch(
-      updateTaskTC({
-        taskId: task.id,
-        todolistId: todolist.id,
-        domainModel: { status },
-      })
-    );
+
+    const model = createTaskModel(task, { status });
+    updateTask({
+      taskId: task.id,
+      todolistId: todolist.id,
+      model,
+    });
   };
 
   const changeTaskTitleHandler = (title: string) => {
-    dispatch(
-      updateTaskTC({
-        taskId: task.id,
-        todolistId: todolist.id,
-        domainModel: { title },
-      })
-    );
+    const model = createTaskModel(task, { title });
+    updateTask({
+      taskId: task.id,
+      todolistId: todolist.id,
+      model,
+    });
   };
 
   return (

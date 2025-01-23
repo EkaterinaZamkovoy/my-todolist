@@ -1,6 +1,6 @@
 import { Container } from '../../../../common/components/Container/Container';
 import { Todolist } from './Todolist/Todolist';
-import { useGetTodolistsQuery } from 'features/todolists/api/_todolistsApi';
+import { useGetTodolistsQuery } from 'features/todolists/api/todolistsApi';
 
 export const Todolists = () => {
   const { data: todolists } = useGetTodolistsQuery();

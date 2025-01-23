@@ -5,16 +5,17 @@ import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons';
 import { useAppDispatch } from '../../../../../common/hooks/useAppDispatch';
 import { AddItemForm } from 'common/components';
 import { DomainTodolist } from 'features/todolists/model/todolistSlice';
+import { useAddTaskMutation } from 'features/todolists/api/tasksApi';
 
 type TodolistPropsType = {
   todolist: DomainTodolist;
 };
 
 export const Todolist = ({ todolist }: TodolistPropsType) => {
-  const dispatch = useAppDispatch();
+  const [addTask] = useAddTaskMutation();
 
   const addTaskCallback = (title: string) => {
-    dispatch(addTaskTC({ todolistId: todolist.id, title }));
+    addTask({ todolistId: todolist.id, title });
   };
 
   return (

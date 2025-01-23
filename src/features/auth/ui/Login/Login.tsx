@@ -1,8 +1,11 @@
+import { selectIsLoggedIn, setIsLoggedIn } from 'app/appSlice';
 import { Button, Container } from 'common/components';
+import { ResultCode } from 'common/enums/enums';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import { useAppSelector } from 'common/hooks/useAppSelector';
 import { Path } from 'common/routing/Routing';
-import { loginTC, selectIsLoggedIn } from 'features/auth/model/authSlice';
+import { useLoginMutation } from 'features/auth/api/authApi';
+import { LoginArgs } from 'features/auth/api/authApi.types';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -19,17 +22,27 @@ export const Login = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<LoginArgs>({
     defaultValues: { email: '', password: '', rememberMe: false },
   });
 
   const dispatch = useAppDispatch();
 
+  const [login] = useLoginMutation();
+
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
-    dispatch(loginTC(data));
-    reset();
+  const onSubmit: SubmitHandler<LoginArgs> = data => {
+    login(data)
+      .then(res => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: true }));
+          localStorage.setItem('sn-token', res.data.data.token);
+        }
+      })
+      .finally(() => {
+        reset();
+      });
   };
 
   const navigate = useNavigate();

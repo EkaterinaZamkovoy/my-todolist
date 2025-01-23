@@ -1,6 +1,6 @@
 import { addTodolist, deleteTodolist } from './todolistSlice';
 import { AppDispatch, AppRootStateType } from 'app/store';
-import { tasksApi } from '../api/tasksApi';
+import { _tasksApi, tasksApi } from '../api/tasksApi';
 import {
   DomainTask,
   UpdateTaskDomainModel,
@@ -77,7 +77,7 @@ export const tasksSlice = createSlice({
 export const fetchTasksTC = (todolistId: string) => {
   return (dispatch: AppDispatch) => {
     dispatch(setAppStatus({ status: 'loading' }));
-    tasksApi
+    _tasksApi
       .getTasks(todolistId)
       .then(res => {
         dispatch(setAppStatus({ status: 'succeeded' }));
@@ -92,7 +92,7 @@ export const fetchTasksTC = (todolistId: string) => {
 export const deleteTaskTC =
   (arg: { taskId: string; todolistId: string }) => (dispatch: AppDispatch) => {
     dispatch(setAppStatus({ status: 'loading' }));
-    tasksApi
+    _tasksApi
       .removeTask(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {
@@ -110,7 +110,7 @@ export const deleteTaskTC =
 export const addTaskTC =
   (arg: { title: string; todolistId: string }) => (dispatch: AppDispatch) => {
     dispatch(setAppStatus({ status: 'loading' }));
-    tasksApi
+    _tasksApi
       .createTask(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {
@@ -150,7 +150,7 @@ export const updateTaskTC =
         ...domainModel,
       };
 
-      tasksApi
+      _tasksApi
         .updateTask({ taskId, todolistId, model })
         .then(res => {
           if (res.data.resultCode === ResultCode.Success) {

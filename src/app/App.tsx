@@ -2,19 +2,28 @@ import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar';
 import { Header } from '../common/components/Header/Header';
 import './App.css';
 import { Routing } from 'common/routing';
-import { useAppDispatch } from 'common/hooks/useAppDispatch';
-import { useEffect } from 'react';
-import { initializeAppTC, selectIsInitialized } from 'features/auth/model/authSlice';
-import { useAppSelector } from 'common/hooks/useAppSelector';
 import { LoadingPage } from 'common/components/LoadingPage/LoadingPage';
+import { useMeQuery } from 'features/auth/api/authApi';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from 'common/hooks/useAppDispatch';
+import { ResultCode } from 'common/enums/enums';
+import { setIsLoggedIn } from './appSlice';
 
 function App() {
+  const { data, isLoading } = useMeQuery();
+
   const dispatch = useAppDispatch();
-  const isInitialized = useAppSelector(selectIsInitialized);
+
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    dispatch(initializeAppTC());
-  }, []);
+    if (!isLoading) {
+      setIsInitialized(true);
+      if (data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: true }));
+      }
+    }
+  }, [isLoading, data]);
 
   if (!isInitialized) {
     return (

@@ -5,31 +5,30 @@ import { useEffect } from 'react';
 import { fetchTasksTC, selectTasks } from 'features/todolists/model/tasksSlice';
 import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import { TaskStatus } from 'common/enums/enums';
+import { useGetTasksQuery } from 'features/todolists/api/tasksApi';
 
 type TasksProps = {
   todolist: DomainTodolist;
 };
 
 export const Tasks = ({ todolist }: TasksProps) => {
-  const tasks = useAppSelector(selectTasks);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchTasksTC(todolist.id));
-  }, []);
+  const { data } = useGetTasksQuery(todolist.id);
 
   // Фильтрация задач
 
-  const allTodolistTasks = tasks[todolist.id];
+  let tasksForTodolist = data?.items;
 
-  let tasksForTodolist = allTodolistTasks;
+  if (todolist.filter === 'active') {
+    tasksForTodolist = tasksForTodolist?.filter(
+      task => task.status === TaskStatus.New
+    );
+  }
 
-  tasksForTodolist =
-    todolist.filter === 'active'
-      ? allTodolistTasks.filter(t => t.status === TaskStatus.New)
-      : todolist.filter === 'completed'
-      ? allTodolistTasks.filter(t => t.status === TaskStatus.Completed)
-      : allTodolistTasks;
+  if (todolist.filter === 'completed') {
+    tasksForTodolist = tasksForTodolist?.filter(
+      task => task.status === TaskStatus.Completed
+    );
+  }
 
   return (
     <div className='tasks'>
