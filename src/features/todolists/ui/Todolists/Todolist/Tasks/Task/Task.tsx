@@ -1,25 +1,14 @@
 import { ChangeEvent } from 'react';
-import { useAppDispatch } from 'common/hooks/useAppDispatch';
-
-import {
-  deleteTaskTC,
-  updateTaskTC,
-} from 'features/todolists/model/tasksSlice';
 import { EditableSpan } from 'common/components/EditableSpan';
 import { Button } from 'common/components';
-import { DomainTodolist } from 'features/todolists/model/todolistSlice';
-import {
-  DomainTask,
-  UpdateTaskDomainModel,
-  UpdateTaskModel,
-} from 'features/todolists/api/tasksApi.types';
+import { DomainTask } from 'features/todolists/api/tasksApi.types';
 import { TaskStatus } from 'common/enums/enums';
 import {
-  useAddTaskMutation,
   useRemoveTaskMutation,
   useUpdateTaskMutation,
 } from 'features/todolists/api/tasksApi';
 import { createTaskModel } from 'features/todolists/lib/utils/createTaskModel';
+import { DomainTodolist } from 'features/todolists/lib/types/types';
 
 type TaskProps = {
   task: DomainTask;
@@ -31,8 +20,6 @@ export const Task = ({ task, todolist, disabled }: TaskProps) => {
   const [removeTask] = useRemoveTaskMutation();
 
   const [updateTask] = useUpdateTaskMutation();
-
-  const dispatch = useAppDispatch();
 
   const deleteTaskHandler = () => {
     removeTask({ taskId: task.id, todolistId: todolist.id });

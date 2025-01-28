@@ -1,10 +1,8 @@
-import {
-  changeTodolistFilter,
-  DomainTodolist,
-  FilterValuesType,
-} from '../../../../model/todolistSlice';
+
+import { DomainTodolist, FilterValues } from 'features/todolists/lib/types/types';
 import { Button } from '../../../../../../common/components/Button/Button';
 import { useAppDispatch } from '../../../../../../common/hooks/useAppDispatch';
+import { todolistsApi } from 'features/todolists/api/todolistsApi';
 
 type FilterTasksButtonsProps = {
   todolist: DomainTodolist;
@@ -14,8 +12,15 @@ export const FilterTasksButtons = ({ todolist }: FilterTasksButtonsProps) => {
   const { filter, id } = todolist;
   const dispatch = useAppDispatch();
   //------
-  const changeFilterHandler = (filter: FilterValuesType) => {
-    dispatch(changeTodolistFilter({ todolistId: id, filter }));
+  const changeFilterHandler = (filter: FilterValues) => {
+    dispatch(
+      todolistsApi.util.updateQueryData('getTodolists', undefined, state => {
+        const index = state.findIndex(tl => tl.id === id);
+        if (index !== -1) {
+          state[index].filter = filter;
+        }
+      })
+    );
   };
   return (
     <div className='filters'>

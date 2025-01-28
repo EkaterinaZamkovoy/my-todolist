@@ -1,18 +1,15 @@
 import { Task } from './Task/Task';
-import { useAppSelector } from '../../../../../../common/hooks/useAppSelector';
-import { DomainTodolist } from 'features/todolists/model/todolistSlice';
-import { useEffect } from 'react';
-import { fetchTasksTC, selectTasks } from 'features/todolists/model/tasksSlice';
-import { useAppDispatch } from 'common/hooks/useAppDispatch';
 import { TaskStatus } from 'common/enums/enums';
 import { useGetTasksQuery } from 'features/todolists/api/tasksApi';
+import { DomainTodolist } from 'features/todolists/lib/types/types';
+import { TasksSkeleton } from 'features/todolists/ui/skeletons/TasksSkeleton/TasksSkeleton';
 
 type TasksProps = {
   todolist: DomainTodolist;
 };
 
 export const Tasks = ({ todolist }: TasksProps) => {
-  const { data } = useGetTasksQuery(todolist.id);
+  const { data, isLoading } = useGetTasksQuery(todolist.id);
 
   // Фильтрация задач
 
@@ -28,6 +25,10 @@ export const Tasks = ({ todolist }: TasksProps) => {
     tasksForTodolist = tasksForTodolist?.filter(
       task => task.status === TaskStatus.Completed
     );
+  }
+
+  if (isLoading) {
+    return <TasksSkeleton />;
   }
 
   return (
