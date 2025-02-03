@@ -10,7 +10,8 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <BrowserRouter>
+  <BrowserRouter
+    basename={process.env.NODE_ENV === 'production' ? '/my-todolist' : '/'}>
     <Provider store={store}>
       <App />
     </Provider>

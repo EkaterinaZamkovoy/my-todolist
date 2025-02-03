@@ -1,7 +1,7 @@
-import { Main } from "app/Main";
-import { Page404 } from "common/components";
-import { Login } from "features/auth/ui/Login/Login";
-import { Route, Routes } from "react-router";
+import { Main } from 'app/Main';
+import { Page404 } from 'common/components';
+import { Login } from 'features/auth/ui/Login/Login';
+import { Route, Routes } from 'react-router';
 
 export const Path = {
   Main: '/',

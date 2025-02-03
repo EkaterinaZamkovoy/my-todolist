@@ -3,11 +3,30 @@ import { DomainTask, GetTaskResponse, UpdateTaskModel } from './tasksApi.types';
 import { BaseResponse } from 'common/types';
 import { baseApi } from 'app/baseApi';
 
+export const PAGE_SIZE = 4;
+
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    getTasks: build.query<GetTaskResponse, string>({
-      query: todolistId => `todo-lists/${todolistId}/tasks`,
-      providesTags: ['Task'],
+    getTasks: build.query<
+      GetTaskResponse,
+      { todolistId: string; args: { count: number; page: number } }
+    >({
+      query: ({ todolistId, args }) => {
+        const params = { ...args, count: PAGE_SIZE };
+
+        return {
+          method: 'GET',
+          url: `todo-lists/${todolistId}/tasks`,
+          params,
+        };
+      },
+      providesTags: (res, err, { todolistId }) =>
+        res
+          ? [
+              ...res.items.map(({ id }) => ({ type: 'Task', id } as const)),
+              { type: 'Task', id: todolistId },
+            ]
+          : ['Task'],
     }),
     addTask: build.mutation<
       BaseResponse<{ item: DomainTask }>,
@@ -22,7 +41,9 @@ export const tasksApi = baseApi.injectEndpoints({
           },
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: (result, error, { todolistId }) => [
+        { type: 'Task', id: todolistId },
+      ],
     }),
     removeTask: build.mutation<
       BaseResponse,
@@ -34,7 +55,9 @@ export const tasksApi = baseApi.injectEndpoints({
           url: `todo-lists/${todolistId}/tasks/${taskId}`,
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: (result, error, { todolistId }) => [
+        { type: 'Task', id: todolistId },
+      ],
     }),
     updateTask: build.mutation<
       BaseResponse<{ item: DomainTask }>,
@@ -47,7 +70,9 @@ export const tasksApi = baseApi.injectEndpoints({
           body: model,
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: (result, error, { todolistId }) => [
+        { type: 'Task', id: todolistId },
+      ],
     }),
   }),
 });

@@ -1,30 +1,15 @@
-import Skeleton from '@mui/material/Skeleton';
-
 export const TasksSkeleton = () => {
   return (
-    <div
-      style={{
-        paddingBottom: '50px',
-      }}>
+    <div className='skeleton-tasks-container'>
       {Array(3)
         .fill(null)
         .map((_, id) => (
-          <div
-            key={id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                gap: '15px',
-              }}>
-              <Skeleton width={30} height={60} />
-              <Skeleton width={150} height={60} />
+          <div key={id} className='skeleton-task-item'>
+            <div className='skeleton-inner-container'>
+              <div className='skeleton-box skeleton-small' />
+              <div className='skeleton-box skeleton-medium' />
             </div>
-            <Skeleton width={30} height={60} />
+            <div className='skeleton-box skeleton-small' />
           </div>
         ))}
     </div>

@@ -9,7 +9,10 @@ type TasksProps = {
 };
 
 export const Tasks = ({ todolist }: TasksProps) => {
-  const { data, isLoading } = useGetTasksQuery(todolist.id);
+  const { data, isLoading } = useGetTasksQuery({
+    todolistId: todolist.id,
+    args: { count: 4, page: 1 },
+  });
 
   // Фильтрация задач
 
