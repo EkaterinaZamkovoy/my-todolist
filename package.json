@@ -5,6 +5,7 @@
       "axios": "axios/dist/node/axios.cjs"
     }
   },
+  "homepage": "https://EkaterinaZamkovoy.github.io/my-todolist",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
