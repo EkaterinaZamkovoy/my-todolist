@@ -1,4 +1,3 @@
-import { instance } from 'common/instance/instance';
 import { DomainTask, GetTaskResponse, UpdateTaskModel } from './tasksApi.types';
 import { BaseResponse } from 'common/types';
 import { baseApi } from 'app/baseApi';

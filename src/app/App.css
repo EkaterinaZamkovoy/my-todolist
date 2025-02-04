@@ -394,7 +394,6 @@ form {
 
 /* skeletons */
 
-
 .skeleton-paper {
   width: 305px;
   padding: 10px 20px;
@@ -458,9 +457,15 @@ form {
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .skeleton-tasks-container {
@@ -468,4 +473,33 @@ form {
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+/* Pagination */
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.pagination-btn:hover:not(.button-disabled) {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination-btn.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+
+.totalCount {
+  margin-left: 20px;
+  font-size: 14px;
+  color: #333;
 }
