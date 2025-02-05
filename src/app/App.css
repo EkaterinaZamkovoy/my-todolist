@@ -203,10 +203,6 @@ button:hover {
   transition: none;
 }
 
-.button-disabled:hover {
-  background-color: #fff;
-}
-
 .error {
   width: calc(100% - 70px);
   padding: 10px;
@@ -485,7 +481,7 @@ form {
   margin: 20px 0;
 }
 
-.pagination-btn:hover:not(.button-disabled) {
+/* .pagination-btn:hover:not(.button-disabled) {
   background-color: #007bff;
   color: white;
 }
@@ -495,8 +491,7 @@ form {
   color: white;
   font-weight: bold;
   pointer-events: none;
-}
-
+} */
 
 .totalCount {
   margin-left: 20px;

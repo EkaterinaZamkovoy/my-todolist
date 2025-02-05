@@ -4,7 +4,10 @@ import { Todolist } from './Todolist/Todolist';
 import { useGetTodolistsQuery } from 'features/todolists/api/todolistsApi';
 
 export const Todolists = () => {
-  const { data: todolists, isLoading } = useGetTodolistsQuery();
+  const { data: todolists, isLoading } = useGetTodolistsQuery(undefined, {
+    pollingInterval: 3000,
+    skipPollingIfUnfocused: true,
+  });
 
   if (isLoading) {
     return (

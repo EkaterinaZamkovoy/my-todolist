@@ -21,4 +21,7 @@ export const baseApi = createApi({
   },
   endpoints: () => ({}),
   tagTypes: ['Todolist', 'Task'],
+  keepUnusedDataFor: 60,
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
 });

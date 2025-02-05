@@ -13,7 +13,7 @@ type TasksProps = {
 export const Tasks = ({ todolist }: TasksProps) => {
   const [page, setPage] = useState(1);
 
-  const { data, isLoading } = useGetTasksQuery({
+  const { data, isLoading, isFetching } = useGetTasksQuery({
     todolistId: todolist.id,
     args: { count: 4, page: 1 },
   });
